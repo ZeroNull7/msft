@@ -4,7 +4,7 @@
   "parameters": {},
   "functions": [],
   "variables": {
-    "policyName": "[concat('PI-', uniqueString('PolicyTest12345'))]"
+    "policyName": "[concat('PI', uniqueString('PolicyTest12345'))]"
   },
   "resources": [
     {
