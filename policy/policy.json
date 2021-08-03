@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "displayName": "Policy080320201450PM",
+        "policyType": "Custom",
+        "mode": "Indexed",
+        "description": "This is policy test 1",
+        "metadata": {
+          "version": "1.0.1",
+          "category": "PolicyCategory1",
+        },
+        "parameters": {
+        },
+        "policyRule": {
+          "if": {
+            "field": "PolicyTest",
+            "exists": "false"
+          },
+          "then": {
+            "effect": "append",
+            "details": [
+              {
+                "field": "PolicyTest",
+                "value": "I am inside!!!"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
