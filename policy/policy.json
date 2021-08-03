@@ -8,6 +8,7 @@
     {
        "type": "Microsoft.Authorization/policyDefinitions",
        "name": "Policy080320201450PM",
+       "apiVersion": "2019-09-01",
       "properties": {
         "displayName": "Policy080320201450PM",
         "policyType": "Custom",
