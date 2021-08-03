@@ -1,7 +1,22 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
+  "parameters": {
+    "tagName": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Carlos",
+     "description": "Name of the tag, such as 'environment'"
+    }
+   },
+   "tagValue": {
+    "type": "String",
+    "metadata": {
+     "displayName": "was here",
+     "description": "Value of the tag, such as 'production'"
+    }
+   }
+  },
   "functions": [],
   "variables": {
     "policyName": "[concat('PI', uniqueString('PolicyTest12345'))]"
@@ -24,15 +39,15 @@
         },
         "policyRule": {
           "if": {
-            "field": "PolicyTest",
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
             "exists": "false"
           },
           "then": {
             "effect": "append",
             "details": [
               {
-                "field": "PolicyTest",
-                "value": "I am inside!!!"
+                  "field": "[concat('tags[', parameters('tagName'), ']')]",
+                  "value": "[parameters('tagValue')]"
               }
             ]
           }
