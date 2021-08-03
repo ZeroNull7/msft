@@ -6,6 +6,8 @@
   "variables": {},
   "resources": [
     {
+       "type": "Microsoft.Authorization/policyDefinitions",
+       "name": "Policy080320201450PM",
       "properties": {
         "displayName": "Policy080320201450PM",
         "policyType": "Custom",
