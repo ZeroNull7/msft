@@ -24,10 +24,10 @@
   "resources": [
     {
        "type": "Microsoft.Authorization/policyDefinitions",
-       "name": "policyName",
+       "name": "[variables('policyName')]",
        "apiVersion": "2019-09-01",
       "properties": {
-        "displayName": "policyName",
+        "displayName": "[variables('policyName')]",
         "policyType": "Custom",
         "mode": "Indexed",
         "description": "This is policy test 1",
@@ -59,7 +59,7 @@
       "name": "Policy080320201450PM-Assignment",
       "apiVersion": "2019-09-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Authorization/policyDefinitions', variables('policyName'))]"
+         "[resourceId('Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
       ],
       "properties": {
         "policyDefinitionId":  "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
