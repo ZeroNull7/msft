@@ -3,14 +3,16 @@
   "contentVersion": "1.0.0.0",
   "parameters": {},
   "functions": [],
-  "variables": {},
+  "variables": {
+    "policyName": "[concat('PI-', uniqueString(resourceGroup().id))]"
+  },
   "resources": [
     {
        "type": "Microsoft.Authorization/policyDefinitions",
-       "name": "Policy080320201450PM",
+       "name": "policyName",
        "apiVersion": "2019-09-01",
       "properties": {
-        "displayName": "Policy080320201450PM",
+        "displayName": "policyName",
         "policyType": "Custom",
         "mode": "Indexed",
         "description": "This is policy test 1",
@@ -36,7 +38,23 @@
           }
         }
       }
+    },
+     {
+      "type": "Microsoft.Authorization/policyAssignments",
+      "name": "Policy080320201450PM-Assignment",
+      "apiVersion": "2019-09-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Authorization/policyDefinitions', variables('policyName'))]",
+      ],
+      "properties": {
+        "policyDefinitionId":  "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
+      }
     }
   ],
-  "outputs": {}
+  "outputs": {
+    "policyName": {
+      "type": "string",
+      "value": "[variables('policyName')]"
+    }
+  }
 }
