@@ -53,7 +53,5 @@
           }
         }
       }
-    },
-    "type": "Microsoft.Authorization/policyDefinitions",
-    "name": "crodriguezde Tag Policy"
+    }
   }
