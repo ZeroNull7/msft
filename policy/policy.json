@@ -39,8 +39,17 @@
         },
         "policyRule": {
           "if": {
-            "field": "[concat('tags[', parameters('tagName'), ']')]",
-            "exists": "false"
+            "allOf":[
+              {
+                "field": "type",
+                "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+             
+              },
+              {
+                "field": "[concat('tags[', parameters('tagName'), ']')]",
+                "exists": "false"
+              }
+            ]
           },
           "then": {
             "effect": "append",
