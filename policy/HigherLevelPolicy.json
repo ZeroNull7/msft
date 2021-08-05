@@ -42,16 +42,11 @@
 								"parameters": {
 
 								},
-								"variables": {
-									"policyName": "[concat('crodriguezde', uniqueString('PolicyTest12345'))]",
-									"tagName": "Confidentiality",
-									"tagDefaultValue": "Sensitive"
-								},
 								"resources": [
 									{
 										"type": "Microsoft.Authorization/policyDefinitions",
 										"apiVersion": "2018-05-01",
-										"name": "[variables('policyName')]",
+										"name": "crodriguez-inner-policy",
 										"properties": {
 											"policyType": "Custom",
 											"mode": "Indexed",
@@ -66,7 +61,7 @@
 															"equals": "Microsoft.Resources/subscriptions/resourceGroups"
 														},
 														{
-															"field": "[concat('tags[', variables('tagName'), ']')]",
+															"field": "tags[Confidentiality]",
 															"exists": "false"
 														}
 													]
@@ -80,8 +75,8 @@
 														"operations": [
 															{
 																"operation": "add",
-																"field": "[concat('tags[', variables('tagName'), ']')]",
-																"value": "[variables('tagDefaultValue')]"
+																"field": "tags[Confidentiality]",
+																"value": "Sensitive"
 															}
 														]
 													}
@@ -92,9 +87,9 @@
 									{
 										"type": "Microsoft.Authorization/policyAssignments",
 										"apiVersion": "2018-05-01",
-										"name": "[concat(variables('policyName'), '-assignment')]",
+										"name": "crodriguez-inner-policy-assignment",
 										"dependsOn": [
-											"[variables('policyName')]"
+											"crodriguez-inner-policy"
 										],
 										"identity": {
 											"type": "SystemAssigned"
@@ -102,7 +97,7 @@
 										"location": "eastus",
 										"properties": {
 											"scope": "[subscription().id]",
-											"policyDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/policyDefinitions', variables('policyName') )]"
+											"policyDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/policyDefinitions', 'crodriguez-inner-policy' )]"
 										}
 									}
 								]
