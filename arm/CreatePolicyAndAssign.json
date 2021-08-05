@@ -2,46 +2,21 @@
 	"$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"tagName": {
-			"type": "String",
-			"metadata": {
-				"displayName": "TagName",
-				"description": "Name of the tag",
-				"default": "type"
-			}
-		},
-		"tagValue": {
-			"type": "String",
-			"metadata": {
-				"displayName": "TagValue",
-				"description": "Value of the tag, such as 'production'",
-				"default": "sensitive"
-			}
-		}
-	},
-	"functions": [
 
-	],
+	},
 	"variables": {
-		"policyName": "[concat('crodriguezde', uniqueString('PolicyTest12345'))]"
+		"policyName": "[concat('crodriguezde', uniqueString('PolicyTest12345'))]",
+        "tagName": "Confidentiality",
+        "tagDefaultValue": "Sensitive"
 	},
 	"resources": [
 		{
 			"type": "Microsoft.Authorization/policyDefinitions",
+			"apiVersion": "2018-05-01",
 			"name": "[variables('policyName')]",
-			"apiVersion": "2019-09-01",
 			"properties": {
-				"displayName": "[variables('policyName')]",
 				"policyType": "Custom",
 				"mode": "Indexed",
-				"description": "ARM deployed policy",
-                "identity": {
-                     "type": "SystemAssigned"
-                },       
-				"metadata": {
-					"version": "1.0.1",
-					"category": "crodriguezdeAutoPolicy"
-				},
 				"parameters": {
 
 				},
@@ -53,7 +28,7 @@
 								"equals": "Microsoft.Resources/subscriptions/resourceGroups"
 							},
 							{
-								"field": "[concat('tags[', parameters('tagName'), ']')]",
+								"field": "[concat('tags[', variables('tagName'), ']')]",
 								"exists": "false"
 							}
 						]
@@ -67,8 +42,8 @@
 							"operations": [
 								{
 									"operation": "add",
-									"field": "[concat('tags[', parameters('tagName'), ']')]",
-									"value": "[parameters('tagValue')]"
+									"field": "[concat('tags[', variables('tagName'), ']')]",
+									"value": "[variables('tagDefaultValue')]"
 								}
 							]
 						}
@@ -78,20 +53,19 @@
 		},
 		{
 			"type": "Microsoft.Authorization/policyAssignments",
-			"name": "Policy080320201450PM-Assignment",
-			"apiVersion": "2019-09-01",
+			"apiVersion": "2018-05-01",
+			"name": "[concat(variables('policyName'), '-assignment')]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
+				"[variables('policyName')]"
 			],
+			"identity": {
+				"type": "SystemAssigned"
+			},
+            "location": "eastus",
 			"properties": {
-				"policyDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
+				"scope": "[subscription().id]",
+				"policyDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/policyDefinitions', variables('policyName') )]"
 			}
 		}
-	],
-	"outputs": {
-		"policyName": {
-			"type": "string",
-			"value": "[variables('policyName')]"
-		}
-	}
+	]
 }
