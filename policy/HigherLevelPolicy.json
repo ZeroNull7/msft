@@ -21,7 +21,7 @@
 						"equals": "Microsoft.Resources/subscriptions/resourceGroups"
 					},
 					{
-						"field": "[concat('tags[', variable('tagName'), ']')]",
+						"field": "[concat('tags[', variables('tagName'), ']')]",
 						"exists": "false"
 					}
 				]
@@ -42,11 +42,16 @@
 								"parameters": {
 
 								},
+								"variables": {
+									"policyName": "[concat('crodriguezde', uniqueString('PolicyTest12345'))]",
+									"tagName": "Confidentiality",
+									"tagDefaultValue": "Sensitive"
+								},
 								"resources": [
 									{
 										"type": "Microsoft.Authorization/policyDefinitions",
 										"apiVersion": "2018-05-01",
-										"name": "crodriguez-inner-policy",
+										"name": "[variables('policyName')]",
 										"properties": {
 											"policyType": "Custom",
 											"mode": "Indexed",
@@ -61,7 +66,7 @@
 															"equals": "Microsoft.Resources/subscriptions/resourceGroups"
 														},
 														{
-															"field": "tags[Confidentiality]",
+															"field": "[concat('tags[', variables('tagName'), ']')]",
 															"exists": "false"
 														}
 													]
@@ -75,8 +80,8 @@
 														"operations": [
 															{
 																"operation": "add",
-																"field": "tags[Confidentiality]",
-																"value": "Sensitive"
+																"field": "[concat('tags[', variables('tagName'), ']')]",
+																"value": "[variables('tagDefaultValue')]"
 															}
 														]
 													}
@@ -87,9 +92,9 @@
 									{
 										"type": "Microsoft.Authorization/policyAssignments",
 										"apiVersion": "2018-05-01",
-										"name": "crodriguez-inner-policy-assignment",
+										"name": "[concat(variables('policyName'), '-assignment')]",
 										"dependsOn": [
-											"crodriguez-inner-policy"
+											"[variables('policyName')]"
 										],
 										"identity": {
 											"type": "SystemAssigned"
@@ -97,7 +102,7 @@
 										"location": "eastus",
 										"properties": {
 											"scope": "[subscription().id]",
-											"policyDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/policyDefinitions', 'crodriguez-inner-policy' )]"
+											"policyDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/policyDefinitions', variables('policyName') )]"
 										}
 									}
 								]
