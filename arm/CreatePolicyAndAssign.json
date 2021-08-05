@@ -35,6 +35,9 @@
 				"policyType": "Custom",
 				"mode": "Indexed",
 				"description": "ARM deployed policy",
+                "identity": {
+                     "type": "SystemAssigned",
+                },       
 				"metadata": {
 					"version": "1.0.1",
 					"category": "crodriguezdeAutoPolicy"
