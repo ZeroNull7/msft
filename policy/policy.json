@@ -69,7 +69,7 @@
         }
       }
     },
-     {
+    {
       "type": "Microsoft.Authorization/policyAssignments",
       "name": "Policy080320201450PM-Assignment",
       "apiVersion": "2019-09-01",
@@ -79,8 +79,7 @@
       "properties": {
         "policyDefinitionId":  "[concat(subscription().id, '/providers/Microsoft.Authorization/policyDefinitions/', variables('policyName'))]"
       }
-    }
-  ],
+    }],
   "outputs": {
     "policyName": {
       "type": "string",
