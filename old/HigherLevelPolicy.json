@@ -9,10 +9,6 @@
 		"parameters": {
 
 		},
-		"variables": {
-			"tagName": "Confidentiality",
-			"tagDefaultValue": "Sensitive"
-		},
 		"policyRule": {
 			"if": {
 				"allOf": [
@@ -21,7 +17,7 @@
 						"equals": "Microsoft.Resources/subscriptions/resourceGroups"
 					},
 					{
-						"field": "[concat('tags[', variables('tagName'), ']')]",
+						"field": "tags[Confidentiality]",
 						"exists": "false"
 					}
 				]
@@ -44,7 +40,7 @@
 								},
 								"variables": {
 									"policyName": "[concat('crodriguezde', uniqueString('PolicyTest12345'))]",
-									"tagName": "Confidentiality",
+									"tagName": "Inner-Confidentiality",
 									"tagDefaultValue": "Sensitive"
 								},
 								"resources": [
@@ -60,16 +56,10 @@
 											},
 											"policyRule": {
 												"if": {
-													"allOf": [
-														{
-															"field": "type",
-															"equals": "Microsoft.Resources/subscriptions/resourceGroups"
-														},
-														{
+
 															"field": "[concat('tags[', variables('tagName'), ']')]",
 															"exists": "false"
-														}
-													]
+
 												},
 												"then": {
 													"effect": "modify",

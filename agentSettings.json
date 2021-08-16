@@ -1,0 +1,6 @@
+{
+	"commandToExecute": "bash azure-chaos-agent-installer.sh -t\"CHAOSRPCANARY\" -p \"1f1bd44e-e9e9-46b7-bc32-24722154f3c6\" -i \"UserAssignedMsi\" -c \"c14e6bd0-5c50-4585-8c55-d0a3ad23ecdd\" -a \"$APP_INSIGHTS_KEY\" -e \"https://agentcommunicationservice-frontdoor-canary.trafficmanager.net\"",
+	"fileUris": [
+	  "https://azurechaosagent.blob.core.windows.net/global/installer/azure-chaos-agent-installer.sh"
+	]
+  }

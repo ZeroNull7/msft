@@ -1,0 +1,15 @@
+{
+	"properties": {
+		"enabled": true,
+		"providerConfiguration": {
+			"identities": [
+				{
+					"clientId": "c14e6bd0-5c50-4585-8c55-d0a3ad23ecdd",
+					"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+					"type": "UserAssignedMsiIdentity"
+				}
+			],
+			"type": "ChaosAgent"
+		}
+	}
+}
